@@ -21,7 +21,7 @@ public class PartieDeTowerDefense {
 		this.affichage = affichage;
 		this.joueur = joueur;
 		this.carte = new Carte();
-		this.intelligenceArtificiel = new IAParVague();
+		this.intelligenceArtificiel = new IAParVagueAvance();
 		try {
 			this.cheminEnnemi = intelligenceArtificiel.obtenirUnChemin(carte);
 		}
