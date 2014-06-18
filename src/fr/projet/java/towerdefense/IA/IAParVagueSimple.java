@@ -38,6 +38,8 @@ public class IAParVagueSimple implements IntelligenceArtificiel {
 
 		remplirCase(Carte.POSTION_DEPART, 0);
 
+		if ( carte.estUneTour(Carte.POSITION_ARRIVE) ) throw new CheminImpossibleException();
+		
 		// Creation de le carte des coefficients.
 		while (!carteRemplie(coefficientActuel)) {
 
@@ -67,9 +69,7 @@ public class IAParVagueSimple implements IntelligenceArtificiel {
 			}
 
 			// Si toutes les cases ne sont pas remplie = possibilitŽ de perdre
-			// le chamin.
-			// TODO Condition ˆ revoir.
-			// Si les tours sont nombreuses a ne marche pas
+			// le chemin.
 			if ((positionDeCoeffActuel.size() == 0)
 					&& (coefficientActuel > 100))
 				throw new CheminImpossibleException();

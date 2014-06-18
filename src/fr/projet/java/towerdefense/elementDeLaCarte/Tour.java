@@ -5,7 +5,7 @@ import fr.projet.java.towerdefense.Position;
 public class Tour extends ElementAPacerSuRLaCarte{
 	
 	private static final int DOMMAGE_PAR_DEFAUT = 1;
-	private static final int PORTEE_PAR_DEFAUT = 4;
+	private static final int PORTEE_PAR_DEFAUT = 1;
 	
 	private Position position;
 	private int dommage = 1;

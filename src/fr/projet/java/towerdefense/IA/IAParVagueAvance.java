@@ -7,8 +7,6 @@ import fr.projet.java.towerdefense.Chemin;
 import fr.projet.java.towerdefense.Position;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.exception.CheminImpossibleException;
-
-//TODO Vérifier case d'arrivée.
 public class IAParVagueAvance implements IntelligenceArtificiel {
 
 	private static final Integer EST_UNE_TOUR = -1;

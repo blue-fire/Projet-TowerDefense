@@ -9,16 +9,16 @@ import fr.projet.java.towerdefense.positionInvalideException;
 
 public class Carte {
 
+	public static Position POSITION_ARRIVE = new Position(9, 5);
+	public static Position POSTION_DEPART = new Position(0, 5);
+
 	public static int TAILLE_X_CARTE = 10;
 	public static int TAILLE_Y_CARTE = 10;
 
-	public static Position POSTION_DEPART = new Position(0, 5);
-	public static Position POSITION_ARRIVE = new Position(9, 5);
-
 	private Case[][] carte;
-	private ArrayList<Tour> tours;
-	private ArrayList<Ennemi> ennemis;
 	private Chemin cheminEnnemi;
+	private ArrayList<Ennemi> ennemis;
+	private ArrayList<Tour> tours;
 
 	public Carte() {
 		this.carte = new Case[TAILLE_X_CARTE][TAILLE_Y_CARTE];
@@ -27,7 +27,30 @@ public class Carte {
 				this.carte[x][y] = new Case();
 		ennemis = new ArrayList<Ennemi>();
 		tours = new ArrayList<Tour>();
-		CARTE_TEST();
+		//CARTE_TEST();
+	}
+
+	public int avancerEnnemi() {
+		int nombreDennemiPasse = 0;
+		Iterator<Ennemi> iteratorDEnnemi = ennemis.iterator();
+		Ennemi ennemiCourant;
+
+		while (iteratorDEnnemi.hasNext()) {
+			ennemiCourant = iteratorDEnnemi.next();
+			deplacerUnEnnemi(cheminEnnemi.getPosition(ennemiCourant
+					.getPositionSurLeChemin()),
+					cheminEnnemi.getPosition(ennemiCourant
+							.getPositionFutureSurLeChemin()));
+			ennemiCourant.avancer();
+
+			if (ennemiCourant.getPositionSurLeChemin() == (cheminEnnemi
+					.getTaille()) - 1) {
+				nombreDennemiPasse++;
+				iteratorDEnnemi.remove();
+			}
+		}
+
+		return nombreDennemiPasse;
 	}
 
 	public ArrayList<Position> casesAdjacentes(Position position) {
@@ -57,30 +80,21 @@ public class Carte {
 		return positionAdjacente;
 	}
 
-	public boolean laCaseEstVide(Position position) {
-		return this.carte[position.getX()][position.getY()].estVide();
-	}
+	public ArrayList<Position> casesAdjacentesAuRangN(Position pos, int n) {
+		ArrayList<Position> positionsAdjacentes = new ArrayList<Position>();
+		Position position;
 
-	public boolean estUneTour(Position position) {
-		if (this.carte[position.getX()][position.getY()].estUneTour())
-			return true;
-		return false;
-	}
+		for (int y = 0; y < TAILLE_Y_CARTE; y++)
+			for (int x = 0; x < TAILLE_X_CARTE; x++) {
+				position = new Position(x, y);
+				if ((Math.abs((Math.abs(x) - Math.abs(pos.getX())))
+						+ Math.abs((Math.abs(pos.getY()) - Math.abs(y))) <= n)
+						&& (!this.estUneTour(position))
+						&& (!position.equals(pos)))
+					positionsAdjacentes.add(position);
+			}
 
-	public void placerUneTour(Position position, Tour tourAPlacer)
-			throws positionInvalideException {
-		if (this.estUneTour(position))
-			throw new positionInvalideException();
-		tourAPlacer.determinerPosition(position);
-		this.tours.add(tourAPlacer);
-		this.carte[position.getX()][position.getY()]
-				.placerUnElement(tourAPlacer);
-	}
-
-	public void placerUnEnnemi(Position position, Ennemi ennemiAPlacer) {
-		this.carte[position.getX()][position.getY()]
-				.placerUnElement(ennemiAPlacer);
-		this.ennemis.add(ennemiAPlacer);
+		return positionsAdjacentes;
 	}
 
 	public void deplacerUnEnnemi(Position positionDepart,
@@ -92,36 +106,6 @@ public class Carte {
 				.supprimerLElement();
 	}
 
-	public int avancerEnnemi() {
-		int nombreDennemiPasse = 0;
-		Iterator<Ennemi> iteratorDEnnemi = ennemis.iterator();
-		Ennemi ennemiCourant;
-
-		while (iteratorDEnnemi.hasNext()) {
-			ennemiCourant = iteratorDEnnemi.next();
-			deplacerUnEnnemi(cheminEnnemi.getPosition(ennemiCourant
-					.getPositionSurLeChemin()),
-					cheminEnnemi.getPosition(ennemiCourant
-							.getPositionFutureSurLeChemin()));
-			ennemiCourant.avancer();
-
-			if (ennemiCourant.getPositionSurLeChemin() == (cheminEnnemi
-					.getTaille()) - 1) {
-				nombreDennemiPasse++;
-				iteratorDEnnemi.remove();
-			}
-		}
-
-		return nombreDennemiPasse;
-	}
-
-	public boolean plusDEnnemiSurLaCarte() {
-		if (this.ennemis.size() == 0)
-			return true;
-		return false;
-	}
-
-	
 	//TODO Position 0,0 pose problème. Toutes les tours attaquent.
 	public void endommagerLesEnnemis(int nombreEnnemi) {
 		ArrayList<Position> positions = new ArrayList<Position>();
@@ -151,15 +135,42 @@ public class Carte {
 		}
 	}
 
-	private ArrayList<Position> positionDansLaPortee(Tour tourCourante) {
-		ArrayList<Position> positions;
-		positions = this.casesAdjacentesAuRangN(tourCourante.obtenirPosition(),
-				tourCourante.obtenirPortee());
-		return positions;
+	public boolean estUnEnnemi(Position position) {
+		if (this.carte[position.getX()][position.getY()].estUnEnnemi())
+			return true;
+		return false;
 	}
 
-	private void supprimerUnEnnemiDeLaCarte(Position position) {
-		this.carte[position.getX()][position.getY()].supprimerLElement();
+	public boolean estUneTour(Position position) {
+		if (this.carte[position.getX()][position.getY()].estUneTour())
+			return true;
+		return false;
+	}
+
+	public boolean laCaseEstVide(Position position) {
+		return this.carte[position.getX()][position.getY()].estVide();
+	}
+
+	
+	public void mettreAJourLeChemin(Chemin cheminEnnemi) {
+		this.cheminEnnemi = cheminEnnemi;
+	}
+
+	public int nombreDeTourAPortee(Position position) {
+		Iterator<Tour> tourCourante = this.tours.iterator();
+		int nombreDeTourDansLaPortee = 0;
+		ArrayList<Position> positionPossible;
+		Iterator<Position> positionCourante;
+		while (tourCourante.hasNext()) {
+			positionPossible = this.positionDansLaPortee(tourCourante.next());
+			positionCourante = positionPossible.iterator();
+			while (positionCourante.hasNext()) {
+				if (position.equals(positionCourante.next()))
+					nombreDeTourDansLaPortee++;
+			}
+
+		}
+		return nombreDeTourDansLaPortee;
 	}
 
 	public Ennemi obtenirLEnnemi(Position position) {
@@ -169,11 +180,34 @@ public class Carte {
 		return null;
 	}
 
-	public boolean estUnEnnemi(Position position) {
-		if (this.carte[position.getX()][position.getY()].estUnEnnemi())
+	public void placerUnEnnemi(Position position, Ennemi ennemiAPlacer) {
+		this.carte[position.getX()][position.getY()]
+				.placerUnElement(ennemiAPlacer);
+		this.ennemis.add(ennemiAPlacer);
+	}
+
+	public void placerUneTour(Position position, Tour tourAPlacer)
+			throws positionInvalideException {
+		if (this.estUneTour(position))
+			throw new positionInvalideException();
+		tourAPlacer.determinerPosition(position);
+		this.tours.add(tourAPlacer);
+		this.carte[position.getX()][position.getY()]
+				.placerUnElement(tourAPlacer);
+	}
+
+	public boolean plusDEnnemiSurLaCarte() {
+		if (this.ennemis.size() == 0)
 			return true;
 		return false;
 	}
+
+	public void supprimerLaTourLaCarte(Tour tour) {
+		carte[tour.obtenirPosition().getX()][tour.obtenirPosition().getY()]
+				.supprimerLElement();
+		this.tours.remove(tour);
+	}
+
 
 	public void verifierVieEnnemi() {
 		Iterator<Ennemi> iteratorDEnnemi = ennemis.iterator();
@@ -188,10 +222,17 @@ public class Carte {
 		}
 	}
 
-	public void mettreAJourLeChemin(Chemin cheminEnnemi) {
-		this.cheminEnnemi = cheminEnnemi;
+	private ArrayList<Position> positionDansLaPortee(Tour tourCourante) {
+		ArrayList<Position> positions;
+		positions = this.casesAdjacentesAuRangN(tourCourante.obtenirPosition(),
+				tourCourante.obtenirPortee());
+		return positions;
 	}
-
+	
+	private void supprimerUnEnnemiDeLaCarte(Position position) {
+		this.carte[position.getX()][position.getY()].supprimerLElement();
+	}
+	
 	@SuppressWarnings("unused")
 	private void CARTE_TEST() {
 		try {
@@ -221,46 +262,6 @@ public class Carte {
 		}
 		catch (positionInvalideException e) {
 		}
-	}
-
-	public ArrayList<Position> casesAdjacentesAuRangN(Position pos, int n) {
-		ArrayList<Position> positionsAdjacentes = new ArrayList<Position>();
-		Position position;
-
-		for (int y = 0; y < TAILLE_Y_CARTE; y++)
-			for (int x = 0; x < TAILLE_X_CARTE; x++) {
-				position = new Position(x, y);
-				if ((Math.abs((Math.abs(x) - Math.abs(pos.getX())))
-						+ Math.abs((Math.abs(pos.getY()) - Math.abs(y))) <= n)
-						&& (!this.estUneTour(position))
-						&& (!position.equals(pos)))
-					positionsAdjacentes.add(position);
-			}
-
-		return positionsAdjacentes;
-	}
-
-	public void supprimerLaTourLaCarte(Tour tour) {
-		carte[tour.obtenirPosition().getX()][tour.obtenirPosition().getY()]
-				.supprimerLElement();
-		this.tours.remove(tour);
-	}
-
-	public int nombreDeTourAPortee(Position position) {
-		Iterator<Tour> tourCourante = this.tours.iterator();
-		int nombreDeTourDansLaPortee = 0;
-		ArrayList<Position> positionPossible;
-		Iterator<Position> positionCourante;
-		while (tourCourante.hasNext()) {
-			positionPossible = this.positionDansLaPortee(tourCourante.next());
-			positionCourante = positionPossible.iterator();
-			while (positionCourante.hasNext()) {
-				if (position.equals(positionCourante.next()))
-					nombreDeTourDansLaPortee++;
-			}
-
-		}
-		return nombreDeTourDansLaPortee;
 	}
 
 }
