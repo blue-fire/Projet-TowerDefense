@@ -27,6 +27,7 @@ public class Carte {
 				this.carte[x][y] = new Case();
 		ennemis = new ArrayList<Ennemi>();
 		tours = new ArrayList<Tour>();
+		CARTE_TEST();
 	}
 
 	public ArrayList<Position> casesAdjacentes(Position position) {

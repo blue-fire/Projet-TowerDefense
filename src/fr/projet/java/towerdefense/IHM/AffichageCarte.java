@@ -42,14 +42,19 @@ public class AffichageCarte extends JPanel {
 				if (carte
 						.estUneTour(new Position(caseCouranteX, caseCouranteY))) {
 					this.carteDeBouton[caseCouranteX][caseCouranteY].setBackground(Color.BLUE);
+					this.carteDeBouton[caseCouranteX][caseCouranteY].setIcon(new ImageIcon("ressources/images/tour_depart.png"));
 				}
 				else if (carte.estUnEnnemi(new Position(caseCouranteX,
 						caseCouranteY))) {
 					this.carteDeBouton[caseCouranteX][caseCouranteY].setBackground(Color.RED);
+					this.carteDeBouton[caseCouranteX][caseCouranteY].setIcon(new ImageIcon("ressources/images/ennemi_depart.png"));
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
 							.setText(Integer.toString(carte.obtenirLEnnemi(new Position(caseCouranteX,caseCouranteY)).obtenirVie()));
+					this.carteDeBouton[caseCouranteX][caseCouranteY].setIconTextGap(0);
+					
 				}
 				else {
+					this.carteDeBouton[caseCouranteX][caseCouranteY].setIcon(new ImageIcon());
 					this.carteDeBouton[caseCouranteX][caseCouranteY].setBackground(Color.WHITE);
 					this.carteDeBouton[caseCouranteX][caseCouranteY].setText("");
 				}
