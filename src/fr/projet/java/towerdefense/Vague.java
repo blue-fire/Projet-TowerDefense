@@ -10,8 +10,9 @@ public class Vague {
 	private int nbEnnemis;
 	
 	public Vague(int niveau) {
-		for (int nombreEnnemi = 0; nombreEnnemi < niveau*5; nombreEnnemi++)
-			this.ennemis.add(new Ennemi(nombreEnnemi, niveau*2));
+		int nombreDEnnemisDuNiveau = niveau*5;
+		for (int ennemiCourant = nombreDEnnemisDuNiveau; ennemiCourant > 0 ; ennemiCourant--)
+			this.ennemis.add(new Ennemi(ennemiCourant, niveau*2));
 		this.nbEnnemis = this.ennemis.size();
 	}
 	

@@ -27,7 +27,7 @@ public class Carte {
 				this.carte[x][y] = new Case();
 		ennemis = new ArrayList<Ennemi>();
 		tours = new ArrayList<Tour>();
-		//CARTE_TEST();
+		CARTE_TEST();
 	}
 
 	public int avancerEnnemi() {
@@ -35,6 +35,8 @@ public class Carte {
 		Iterator<Ennemi> iteratorDEnnemi = ennemis.iterator();
 		Ennemi ennemiCourant;
 
+		// Pour tout les ennemis on regarde leurs position sur le chemin 
+		// ( attribut ) et on l'avance à la position suivante.
 		while (iteratorDEnnemi.hasNext()) {
 			ennemiCourant = iteratorDEnnemi.next();
 			deplacerUnEnnemi(cheminEnnemi.getPosition(ennemiCourant
@@ -43,6 +45,7 @@ public class Carte {
 							.getPositionFutureSurLeChemin()));
 			ennemiCourant.avancer();
 
+			// Si il se trouve sur la derniére case on le supprime et on endommage le joueur.
 			if (ennemiCourant.getPositionSurLeChemin() == (cheminEnnemi
 					.getTaille()) - 1) {
 				nombreDennemiPasse++;
@@ -106,32 +109,35 @@ public class Carte {
 				.supprimerLElement();
 	}
 
-	//TODO Position 0,0 pose problème. Toutes les tours attaquent.
-	public void endommagerLesEnnemis(int nombreEnnemi) {
+	public void endommagerLesEnnemis() {
 		ArrayList<Position> positions = new ArrayList<Position>();
 		Iterator<Position> iteratorDePosition;
 
 		Iterator<Tour> iteratorDeTour = tours.iterator();
 
+		// Pour toutes les tours on vérifie les position qu'elles peuvent toucher.
 		while (iteratorDeTour.hasNext()) {
-			Position position = new Position(0,0);
+			Position position = null;
 			Tour tourCourante = iteratorDeTour.next();
 			positions = positionDansLaPortee(tourCourante);
 			iteratorDePosition = positions.iterator();
-			int rangDeLEnnemi = nombreEnnemi;
-			
-			Position positionDeLEnnemiAAttaquer = new Position(0,0);
-			
+			int rangDeLEnnemi = 0;
+
+			Position positionDeLEnnemiAAttaquer = null;
+
+			// On parcourt les positions et on note l'ennemi de rang le plus faible ( le plus avancé sur le chemin ).
 			while (iteratorDePosition.hasNext()) {
 				position = iteratorDePosition.next();
 				if (this.estUnEnnemi(position)) {
-					if ( this.obtenirLEnnemi(position).obtenirNumeroEnnemi() < rangDeLEnnemi )
+					if (this.obtenirLEnnemi(position).obtenirNumeroEnnemi() > rangDeLEnnemi)
 						positionDeLEnnemiAAttaquer = position;
 				}
 			}
-			if (this.estUnEnnemi(positionDeLEnnemiAAttaquer))
+			// Si un ennemi a été trouvé on lui inflige des dégâts.
+			if ((positionDeLEnnemiAAttaquer != null)
+					&& (this.estUnEnnemi(positionDeLEnnemiAAttaquer)))
 				obtenirLEnnemi(positionDeLEnnemiAAttaquer).recevoirDommage(
-					tourCourante.obtenirDommage());
+						tourCourante.obtenirDommage());
 		}
 	}
 
@@ -151,7 +157,6 @@ public class Carte {
 		return this.carte[position.getX()][position.getY()].estVide();
 	}
 
-	
 	public void mettreAJourLeChemin(Chemin cheminEnnemi) {
 		this.cheminEnnemi = cheminEnnemi;
 	}
@@ -208,7 +213,6 @@ public class Carte {
 		this.tours.remove(tour);
 	}
 
-
 	public void verifierVieEnnemi() {
 		Iterator<Ennemi> iteratorDEnnemi = ennemis.iterator();
 
@@ -228,11 +232,11 @@ public class Carte {
 				tourCourante.obtenirPortee());
 		return positions;
 	}
-	
+
 	private void supprimerUnEnnemiDeLaCarte(Position position) {
 		this.carte[position.getX()][position.getY()].supprimerLElement();
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void CARTE_TEST() {
 		try {
