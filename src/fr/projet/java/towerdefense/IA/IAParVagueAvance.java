@@ -39,11 +39,6 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 		// Creation de le carte des coefficients.
 		while (!carteRemplie(coefficientActuel)) {
 
-			
-			//TODO Supprimer truc pour debug.
-			if (coefficientActuel == 130) {
-				coefficientActuel = 130;
-			}
 			// Mise a zero de positionACoefficiente
 			positionACoefficiente = new ArrayList<Position>();
 
@@ -74,16 +69,18 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 
 		// Creation du chemin.
 		while (!positionCheminActuel.equals(Carte.POSTION_DEPART)) {
+			
 			// Ajout de la position au chemin
 			if ( carte.estUneTour(positionCheminActuel) ) throw new CheminImpossibleException();
 			cheminDefinitif.add(0, positionCheminActuel);
-
-			// Determinisation de la position adjacente la moins coefficienté.
-			positionAdjacente = casesAdjacentes(positionCheminActuel);
+			
+			// Si il n'y a pas de coefficient dans les cases adjacentes le chemin est impossible.
+			positionAdjacente = casesAdjacentesCoefficientees(positionCheminActuel);
 			if ( positionAdjacente.size() == 0 ) throw new CheminImpossibleException();
 			Iterator<Position> iteratorDePositionAdjacente = positionAdjacente
 					.iterator();
 			
+			// Determinisation de la position adjacente la moins coefficienté.
 			while (iteratorDePositionAdjacente.hasNext()) {
 				positionATesterPourCoefficient = iteratorDePositionAdjacente
 						.next();
@@ -105,6 +102,8 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 
 
 		}
+		
+		//Ajout de la dernière position du chemin
 		cheminDefinitif.add(0, positionCheminActuel);
 
 		// Affectation et retour du chemin
@@ -112,7 +111,7 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 		return chemin;
 	}
 
-	private ArrayList<Position> casesAdjacentes(Position position) {
+	private ArrayList<Position> casesAdjacentesCoefficientees(Position position) {
 		ArrayList<Position> positionAdjacente = new ArrayList<Position>();
 
 		if ( (position.getX() > 0)
