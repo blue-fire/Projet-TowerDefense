@@ -15,7 +15,7 @@ public class LanceurDeTowerDefense {
 		
 		//TODO Possiblité que jouer() se lance avant le thread de swing ... ( Plantage )
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();

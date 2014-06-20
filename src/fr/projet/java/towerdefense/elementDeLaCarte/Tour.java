@@ -24,7 +24,7 @@ public class Tour extends ElementAPacerSuRLaCarte{
 	
 	public void augmenterNiveau() {
 		this.portee++;
-		this.dommage *= 2;
+		this.dommage += 2;
 		this.niveau++;
 	}
 	

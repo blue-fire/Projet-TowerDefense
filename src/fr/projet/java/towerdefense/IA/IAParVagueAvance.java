@@ -40,10 +40,6 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 		while (!carteRemplie(coefficientActuel)) {
 
 			
-			//TODO Supprimer truc pour debug.
-			if (coefficientActuel == 130) {
-				coefficientActuel = 130;
-			}
 			// Mise a zero de positionACoefficiente
 			positionACoefficiente = new ArrayList<Position>();
 
