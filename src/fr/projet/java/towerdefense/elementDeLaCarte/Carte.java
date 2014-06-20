@@ -225,6 +225,19 @@ public class Carte {
 			}
 		}
 	}
+	
+	public Tour obtenirLaTourDeCase(Position position) throws PositionInvalideException {
+		if (!this.estUneTour(position)) throw new PositionInvalideException();
+		return (Tour) carte[position.getX()][position.getY()].obtenirLElement();
+	}
+	
+	public int obtenirLeNombreDeTours() {
+		return tours.size();
+	}
+
+	public int obtenirLeNombreDEnnemis() {
+		return ennemis.size();
+	}
 
 	private ArrayList<Position> positionDansLaPortee(Tour tourCourante) {
 		ArrayList<Position> positions;
@@ -266,14 +279,6 @@ public class Carte {
 		}
 		catch (PositionInvalideException e) {
 		}
-	}
-	
-	public int obtenirLeNombreDeTours() {
-		return tours.size();
-	}
-
-	public int obtenirLeNombreDEnnemis() {
-		return ennemis.size();
 	}
 
 }
