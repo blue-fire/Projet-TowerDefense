@@ -4,10 +4,7 @@ import fr.projet.java.towerdefense.IA.*;
 import fr.projet.java.towerdefense.IHM.Menu;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.elementDeLaCarte.Tour;
-import fr.projet.java.towerdefense.exception.AnnulerException;
-import fr.projet.java.towerdefense.exception.CheminImpossibleException;
-import fr.projet.java.towerdefense.exception.FinirLeTourException;
-import fr.projet.java.towerdefense.exception.PositionInvalideException;
+import fr.projet.java.towerdefense.exception.*;
 
 public class PartieDeTowerDefense {
 
@@ -113,7 +110,7 @@ public class PartieDeTowerDefense {
 
 
 			affichage.afficherLaCarte(carte);
-			// TODO Un peu sale non ?
+
 			affichage.afficherLeMenu(vie, Menu.NE_PAS_METTRE_A_JOUR,
 					carte.obtenirLeNombreDeTours(),
 					carte.obtenirLeNombreDEnnemis());

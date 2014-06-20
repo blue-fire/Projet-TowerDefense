@@ -22,7 +22,6 @@ public class IHMTowerDefense implements Affichage, Joueur, Runnable,
 	private AffichageCarte carte;
 	private Menu menu;
 
-	//TODO Changer le nom de la variable.
 	private boolean continuerLAction;
 
 	private boolean tourEnAttente;

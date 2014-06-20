@@ -1,23 +1,12 @@
 package fr.projet.java.towerdefense.elementDeLaCarte;
 
-import java.util.Random;
-
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
-public class Ennemi extends ElementAPacerSuRLaCarte {
-	private static final int VIE_PAR_DEFAUT = 5;
+public abstract class Ennemi extends ElementAPacerSuRLaCarte {
 	private int positionSurLeChemin;
 	private int vie;
 	private int numeroEnnemi;
-	private Icon icon;
-	
-	public Ennemi(int numeroEnnemi) {
-		this.positionSurLeChemin = 0;
-		this.vie = VIE_PAR_DEFAUT;
-		this.numeroEnnemi = numeroEnnemi;
-		affecterUnIcon();
-	}
+	protected Icon icon;
 	
 	public Ennemi(int numeroEnnemi, int vie) {
 		this.positionSurLeChemin = 0;
@@ -58,19 +47,5 @@ public class Ennemi extends ElementAPacerSuRLaCarte {
 		return this.icon;
 	}
 	
-	private void affecterUnIcon() {
-		Random generateur = new Random();
-		int image = generateur.nextInt(3);
-		
-		switch (image) {
-		case 1 :
-			this.icon = new ImageIcon("ressources/images/ennemis/ennemi_faible_1.png");
-			break;
-		case 2 :
-			this.icon = new ImageIcon("ressources/images/ennemis/ennemi_faible_2.png");
-			break;
-		default :
-			this.icon =  new ImageIcon("ressources/images/ennemis/ennemi_faible_3.png");
-		}
-	}
+	protected abstract void affecterUnIcon();
 }
