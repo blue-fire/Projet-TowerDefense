@@ -95,7 +95,7 @@ public class PartieDeTowerDefense {
 			}
 
 			vie -= carte.avancerEnnemi();
-			carte.endommagerLesEnnemis(vagueCourante.obtenirNbEnnemis());
+			carte.endommagerLesEnnemis();
 			carte.verifierVieEnnemi();
 			affichage.afficherLaCarte(carte);
 			if (carte.plusDEnnemiSurLaCarte())
