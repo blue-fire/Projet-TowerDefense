@@ -1,11 +1,13 @@
 package fr.projet.java.towerdefense;
 
 import fr.projet.java.towerdefense.IA.*;
+import fr.projet.java.towerdefense.IHM.Menu;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.elementDeLaCarte.Tour;
 import fr.projet.java.towerdefense.exception.AnnulerException;
 import fr.projet.java.towerdefense.exception.CheminImpossibleException;
 import fr.projet.java.towerdefense.exception.FinirLeTourException;
+import fr.projet.java.towerdefense.exception.PositionInvalideException;
 
 public class PartieDeTowerDefense {
 
@@ -42,36 +44,79 @@ public class PartieDeTowerDefense {
 	}
 
 	private void jouerUnTour() {
-		Tour tour;
+		ActionUtilisateur actionJoueur;
 		Position position;
+		Tour tour;
 
 		affichage.afficherLaCarte(carte);
 
 		while (true) {
+			// Le joueur choisi l'action qu'il souhaite effectuer.
 			try {
-				tour = joueur.choisirUneTour();
+				actionJoueur = joueur.choisirUneAction();
 			}
 			catch (FinirLeTourException e) {
 				break;
 			}
-			try {
-				position = joueur.choisirUnePosition();
-				carte.placerUneTour(position, tour);
-				this.cheminEnnemi = this.intelligenceArtificiel
-						.obtenirUnChemin(carte);
-			}
-			catch (AnnulerException e) {
-				System.err.println("Action annulé.");
-			}
-			catch (CheminImpossibleException e) {
-				carte.supprimerLaTourLaCarte(tour);
-				System.err.println("Chemin impossible, action annulé.");
-			}
-			catch (positionInvalideException e) {
-				System.err.println("Case occupé, action annuler.");
-			}
+
+			// Le joueur choisi la position a laquelle il souhaite effectuer
+			// l'action.
+				try {
+					position = joueur.choisirUnePosition();
+					
+					// On effectue l'action.
+					if (actionJoueur == ActionUtilisateur.creerTour) {
+						tour = new Tour();
+						tour.determinerPosition(position);
+						carte.placerUneTour(position, tour);
+						try {
+							cheminEnnemi = intelligenceArtificiel.obtenirUnChemin(carte);
+						}
+						catch (CheminImpossibleException e) {
+							carte.supprimerLaTourLaCarte(tour);
+							System.err.println("Chemin imposiible, action annulée.");
+						}
+					}
+					if (actionJoueur == ActionUtilisateur.supprimerTour) {
+						tour = carte.obtenirLaTourDeCase(position);
+						carte.supprimerLaTourLaCarte(tour);
+						try {
+							cheminEnnemi = intelligenceArtificiel.obtenirUnChemin(carte);
+						}
+						catch (CheminImpossibleException e) {
+							carte.supprimerLaTourLaCarte(tour);
+							System.err.println("Chemin imposiible, action annulée.");
+						}
+					}
+					if (actionJoueur == ActionUtilisateur.ameliorerTour) {
+						tour = carte.obtenirLaTourDeCase(position);
+						tour.augmenterNiveau();
+						try {
+							cheminEnnemi = intelligenceArtificiel.obtenirUnChemin(carte);
+						}
+						catch (CheminImpossibleException e) {
+							carte.supprimerLaTourLaCarte(tour);
+							System.err.println("Chemin imposiible, action annulée.");
+						}
+					}
+					
+				}
+				catch (AnnulerException e) {
+					System.err.println("Action annuler par l'utilisateur.");
+				}
+				catch (PositionInvalideException e) {
+					System.err.println("La position n'est pas valide.");
+				}
+				
+				
+				
+
 
 			affichage.afficherLaCarte(carte);
+			// TODO Un peu sale non ?
+			affichage.afficherLeMenu(vie, Menu.NE_PAS_METTRE_A_JOUR,
+					carte.obtenirLeNombreDeTours(),
+					carte.obtenirLeNombreDEnnemis());
 		}
 	}
 
@@ -83,7 +128,7 @@ public class PartieDeTowerDefense {
 
 		while (true) {
 			try {
-				Thread.sleep(200);
+				Thread.sleep(600);
 			}
 			catch (InterruptedException e) {
 				e.printStackTrace();
@@ -98,6 +143,9 @@ public class PartieDeTowerDefense {
 			carte.endommagerLesEnnemis();
 			carte.verifierVieEnnemi();
 			affichage.afficherLaCarte(carte);
+			affichage.afficherLeMenu(vie, niveau,
+					carte.obtenirLeNombreDeTours(),
+					carte.obtenirLeNombreDEnnemis());
 			if (carte.plusDEnnemiSurLaCarte())
 				break;
 		}

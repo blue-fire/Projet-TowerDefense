@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import fr.projet.java.towerdefense.Chemin;
 import fr.projet.java.towerdefense.Position;
-import fr.projet.java.towerdefense.positionInvalideException;
+import fr.projet.java.towerdefense.exception.PositionInvalideException;
 
 public class Carte {
 
@@ -192,9 +192,9 @@ public class Carte {
 	}
 
 	public void placerUneTour(Position position, Tour tourAPlacer)
-			throws positionInvalideException {
+			throws PositionInvalideException {
 		if (this.estUneTour(position))
-			throw new positionInvalideException();
+			throw new PositionInvalideException();
 		tourAPlacer.determinerPosition(position);
 		this.tours.add(tourAPlacer);
 		this.carte[position.getX()][position.getY()]
@@ -264,8 +264,16 @@ public class Carte {
 			this.placerUneTour(new Position(4, 5), new Tour());
 			this.placerUneTour(new Position(3, 5), new Tour());
 		}
-		catch (positionInvalideException e) {
+		catch (PositionInvalideException e) {
 		}
+	}
+	
+	public int obtenirLeNombreDeTours() {
+		return tours.size();
+	}
+
+	public int obtenirLeNombreDEnnemis() {
+		return ennemis.size();
 	}
 
 }
