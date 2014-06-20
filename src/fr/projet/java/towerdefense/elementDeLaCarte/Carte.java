@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import fr.projet.java.towerdefense.Chemin;
 import fr.projet.java.towerdefense.Position;
-import fr.projet.java.towerdefense.positionInvalideException;
+import fr.projet.java.towerdefense.exception.PositionInvalideException;
 
 public class Carte {
 
@@ -106,7 +106,6 @@ public class Carte {
 				.supprimerLElement();
 	}
 
-	//TODO Position 0,0 pose problème. Toutes les tours attaquent.
 	public void endommagerLesEnnemis(int nombreEnnemi) {
 		ArrayList<Position> positions = new ArrayList<Position>();
 		Iterator<Position> iteratorDePosition;
@@ -187,9 +186,9 @@ public class Carte {
 	}
 
 	public void placerUneTour(Position position, Tour tourAPlacer)
-			throws positionInvalideException {
+			throws PositionInvalideException {
 		if (this.estUneTour(position))
-			throw new positionInvalideException();
+			throw new PositionInvalideException();
 		tourAPlacer.determinerPosition(position);
 		this.tours.add(tourAPlacer);
 		this.carte[position.getX()][position.getY()]
@@ -260,8 +259,21 @@ public class Carte {
 			this.placerUneTour(new Position(4, 5), new Tour());
 			this.placerUneTour(new Position(3, 5), new Tour());
 		}
-		catch (positionInvalideException e) {
+		catch (PositionInvalideException e) {
 		}
+	}
+
+	public int obtenirLeNombreDeTours() {
+		return this.tours.size();
+	}
+
+	public int obtenirLeNombreDEnnemis() {
+		return this.ennemis.size();
+	}
+
+	public Tour obtenirLaTourDeCase(Position position) throws PositionInvalideException {
+		if (!this.estUneTour(position)) throw new PositionInvalideException();
+		return (Tour) carte[position.getX()][position.getY()].obtenirLElement();
 	}
 
 }
