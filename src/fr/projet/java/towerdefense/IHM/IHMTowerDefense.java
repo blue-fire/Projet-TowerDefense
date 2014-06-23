@@ -9,14 +9,17 @@ import javax.swing.JSplitPane;
 
 import fr.projet.java.towerdefense.ActionUtilisateur;
 import fr.projet.java.towerdefense.Affichage;
-import fr.projet.java.towerdefense.Joueur;
+import fr.projet.java.towerdefense.JoueurAbstrait;
 import fr.projet.java.towerdefense.Position;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.exception.AnnulerException;
 import fr.projet.java.towerdefense.exception.FinirLeTourException;
 
-public class IHMTowerDefense implements Affichage, Joueur, Runnable,
-		ActionListener {
+/**
+ * @author Romain L'interfaces graphique.
+ */
+public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
+		Runnable, ActionListener {
 
 	private JSplitPane splitPane;
 	private AffichageCarte carte;
@@ -30,54 +33,58 @@ public class IHMTowerDefense implements Affichage, Joueur, Runnable,
 	private Position positionChoisi;
 	private boolean positionEnAttente;
 
+	/**
+	 * Creer les element de l'interface.
+	 */
 	public IHMTowerDefense() {
+		super();
 		continuerLAction = true;
 
 		tourEnAttente = true;
 		positionEnAttente = true;
-		
+
 		actionChoisie = null;
 		positionChoisi = null;
 	}
 
 	@Override
 	public ActionUtilisateur choisirUneAction() throws FinirLeTourException {
-		//carte.desactiverLaCarte();
-		
-		while ( tourEnAttente && continuerLAction ) {
+		// carte.desactiverLaCarte();
+
+		while (tourEnAttente && continuerLAction) {
 			// TODO Supprimer ça en faisant que la boucle marche toujours.
-			System.out.println("a");
+			//System.out.println("a");
 
 		}
 		if (!continuerLAction) {
 			continuerLAction = true;
 			throw new FinirLeTourException();
 		}
-		
+
 		tourEnAttente = true;
-		//carte.activerLaCarte();
+		// carte.activerLaCarte();
 		return actionChoisie;
 	}
 
 	@Override
 	public Position choisirUnePosition() throws AnnulerException {
 		menu.desactiverLeMenu();
-		
-		while ( positionEnAttente && continuerLAction ) {
+
+		while (positionEnAttente && continuerLAction) {
 			// TODO RE - supprimer ça en faisant que la boucle marche toujours.
-			System.out.println("b");
+			//System.out.println("b");
 		}
-		
+
 		if (!continuerLAction) {
 			continuerLAction = true;
 			menu.activerLeMenu();
 			throw new AnnulerException();
 		}
-		
+
 		positionEnAttente = true;
 		menu.activerLeMenu();
 		return positionChoisi;
-	
+
 	}
 
 	@Override
@@ -90,15 +97,14 @@ public class IHMTowerDefense implements Affichage, Joueur, Runnable,
 			int nombreDEnnemis) {
 		this.menu.mettreAJour(vies, niveauVague, nombreDeTours, nombreDEnnemis);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent even) {
 
 		JComponent source = (JComponent) even.getSource();
 
 		if (source instanceof BouttonCarte) {
-			positionChoisi = new Position(
-					((BouttonCarte) source).obtenirX(),
+			positionChoisi = new Position(((BouttonCarte) source).obtenirX(),
 					((BouttonCarte) source).obtenirY());
 			positionEnAttente = false;
 
@@ -106,9 +112,12 @@ public class IHMTowerDefense implements Affichage, Joueur, Runnable,
 		else if (source.getName() == "finirLAction")
 			continuerLAction = false;
 		else {
-			if (source.getName() == "creer") actionChoisie = ActionUtilisateur.creerTour;
-			else if (source.getName() == "supprimer") actionChoisie = ActionUtilisateur.supprimerTour;
-			else if (source.getName() == "ameliorer") actionChoisie = ActionUtilisateur.ameliorerTour;
+			if (source.getName() == "creer")
+				actionChoisie = ActionUtilisateur.creerTour;
+			else if (source.getName() == "supprimer")
+				actionChoisie = ActionUtilisateur.supprimerTour;
+			else if (source.getName() == "ameliorer")
+				actionChoisie = ActionUtilisateur.ameliorerTour;
 			tourEnAttente = false;
 		}
 

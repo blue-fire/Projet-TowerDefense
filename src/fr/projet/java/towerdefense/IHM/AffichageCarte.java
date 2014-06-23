@@ -11,11 +11,19 @@ import fr.projet.java.towerdefense.Position;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.exception.PositionInvalideException;
 
+/**
+ * @author Romain
+ * Partie du programme destine a afficher la carte.
+ */
 public class AffichageCarte extends JPanel {
 
 	private GridLayout gridLayout;
 	private BouttonCarte[][] carteDeBouton;
 
+	/**
+	 * Constructeur de la carte de bouton.
+	 * @param lis Ecouteur des boutons.
+	 */
 	public AffichageCarte(ActionListener lis) {
 		super();
 
@@ -38,6 +46,10 @@ public class AffichageCarte extends JPanel {
 			}
 	}
 
+	/**
+	 * Mise a jour de la carte.
+	 * @param carte la carte que l'on doit afficher.
+	 */
 	public void mettreAJour(Carte carte) {
 		for (int caseCouranteX = 0; caseCouranteX < Carte.TAILLE_X_CARTE; caseCouranteX++)
 			for (int caseCouranteY = 0; caseCouranteY < Carte.TAILLE_Y_CARTE; caseCouranteY++) {
@@ -97,6 +109,11 @@ public class AffichageCarte extends JPanel {
 			}
 	}
 	
+	/**
+	 * Desactive les click sur la carte
+	 * 
+	 * Non utilise : provoque des bug d'affichage.
+	 */
 	public void desactiverLaCarte() {
 		for (int caseCouranteX = 0; caseCouranteX < Carte.TAILLE_X_CARTE; caseCouranteX++)
 			for (int caseCouranteY = 0; caseCouranteY < Carte.TAILLE_Y_CARTE; caseCouranteY++) {
@@ -104,6 +121,11 @@ public class AffichageCarte extends JPanel {
 			}
 	}
 
+	/**
+	 * Active les click sur la carte.
+	 * 
+	 * Non utilise : provoque des bug d'affichage.
+	 */
 	public void activerLaCarte() {
 		for (int caseCouranteX = 0; caseCouranteX < Carte.TAILLE_X_CARTE; caseCouranteX++)
 			for (int caseCouranteY = 0; caseCouranteY < Carte.TAILLE_Y_CARTE; caseCouranteY++) {

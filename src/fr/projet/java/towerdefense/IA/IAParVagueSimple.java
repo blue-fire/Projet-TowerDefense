@@ -8,11 +8,19 @@ import fr.projet.java.towerdefense.Position;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.exception.CheminImpossibleException;
 
+/**
+ * @author Romain IA qui utilise l'algorithme de detection de chemin par vague.
+ *         On affecte un coefficient ˆ chaque case puis on parcourt le chemin en
+ *         sens inverse en trouvant les case adjacentes les moins coefficiente.
+ */
 public class IAParVagueSimple implements IntelligenceArtificiel {
 
 	private static final Integer EST_UNE_TOUR = -1;
 	private Integer[][] carteCoefficient;
 
+	/**
+	 * Le constructeur initialise la carte des coefficient.
+	 */
 	public IAParVagueSimple() {
 		this.carteCoefficient = new Integer[Carte.TAILLE_X_CARTE][Carte.TAILLE_Y_CARTE];
 	}
@@ -40,7 +48,7 @@ public class IAParVagueSimple implements IntelligenceArtificiel {
 		if ( carte.estUneTour(Carte.POSITION_ARRIVE) ) throw new CheminImpossibleException();
 		
 		// Creation de le carte des coefficients.
-		while (!carteRemplie(coefficientActuel)) {
+		while (!carteRemplie()) {
 
 			// Mise a zero de positionACoefficiente
 			positionACoefficiente = new ArrayList<Position>();
@@ -109,7 +117,7 @@ public class IAParVagueSimple implements IntelligenceArtificiel {
 		return chemin;
 	}
 
-	private boolean carteRemplie(int coeff) {
+	private boolean carteRemplie() {
 		for (int x = 0; x < Carte.TAILLE_X_CARTE; x++)
 			for (int y = 0; y < Carte.TAILLE_Y_CARTE; y++)
 				if ( (carteCoefficient[x][y] == null) )

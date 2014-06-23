@@ -4,8 +4,16 @@ import javax.swing.SwingUtilities;
 
 import fr.projet.java.towerdefense.IHM.IHMTowerDefense;
 
+/**
+ * @author Romain
+ * La classe min de l'application qui initialise les partie et les lance.
+ */
 public class LanceurDeTowerDefense {
 
+	/**
+	 * La classe main...
+	 * @param args Ici null
+	 */
 	public static void main(String[] args) {
 		
 		IHMTowerDefense ihm = new IHMTowerDefense();

@@ -7,6 +7,10 @@ import fr.projet.java.towerdefense.Position;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.exception.CheminImpossibleException;
 
+/**
+ * @author Romain
+ * Une IA de test qui renvoi un chemin prédéfini.
+ */
 public class IATest implements IntelligenceArtificiel {
 
 	@Override

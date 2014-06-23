@@ -5,58 +5,95 @@ import javax.swing.ImageIcon;
 
 import fr.projet.java.towerdefense.Position;
 
-public class Tour extends ElementAPacerSuRLaCarte{
-	
+/**
+ * @author Romain
+ * 
+ *         Une tour qui permet de blesser les ennemis.
+ */
+public class Tour extends ElementAPacerSuRLaCarte {
+
 	private static final int DOMMAGE_PAR_DEFAUT = 1;
 	private static final int PORTEE_PAR_DEFAUT = 1;
-	
+
 	private Icon icon;
-	
+
+	// TODO Passer en final.
 	private Position position;
+
 	private int dommage = 1;
 	private int portee;
 	private int niveau;
-	
+
+	/**
+	 * Une tour qui a une portee un niveau et fait des dommage.
+	 */
 	public Tour() {
 		this.dommage = DOMMAGE_PAR_DEFAUT;
 		this.portee = PORTEE_PAR_DEFAUT;
 		this.niveau = 1;
 		affecterUnIcone();
 	}
-	
+
+	/**
+	 * determine la posiiton a laquelle sera placer la tour.
+	 * 
+	 * @param position
+	 *            la position de la tour.
+	 */
 	public void determinerPosition(Position position) {
 		this.position = position;
 	}
-	
+
+	/**
+	 * La tour augmente d'un niveau
+	 */
 	public void augmenterNiveau() {
 		this.portee++;
 		this.dommage += 2;
 		this.niveau++;
 		affecterUnIcone();
 	}
-	
+
+	/**
+	 * @return la position de la tour.
+	 */
 	public Position obtenirPosition() {
 		return this.position;
 	}
 
+	/**
+	 * @return les dommage de la tour.
+	 */
 	public int obtenirDommage() {
-		return this.dommage ;
+		return this.dommage;
 	}
-	
+
+	/**
+	 * @return La portee de la tour.
+	 */
 	public int obtenirPortee() {
 		return this.portee;
 	}
-	
+
+	/**
+	 * @return Le niveau de la tour.
+	 */
 	public int obtenirNiveau() {
 		return this.niveau;
 	}
-	
-	public Icon obtenirLIcone(){
+
+	/**
+	 * @return l'icone de la tour.
+	 */
+	public Icon obtenirLIcone() {
 		return this.icon;
 	}
-	
+
 	private void affecterUnIcone() {
-		if (this.niveau > 2) this.icon = new ImageIcon("ressources/images/tours/tour_puissante.png");
-		else this.icon = new ImageIcon("ressources/images/tours/tour_faible.png");
+		if (this.niveau > 2)
+			this.icon = new ImageIcon(
+					"ressources/images/tours/tour_puissante.png");
+		else
+			this.icon = new ImageIcon("ressources/images/tours/tour_faible.png");
 	}
 }

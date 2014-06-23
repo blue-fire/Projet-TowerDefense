@@ -1,20 +1,37 @@
 package fr.projet.java.towerdefense;
 
+/**
+ * @author Romain Une position sur la carte.
+ */
 public class Position {
 
-	private int x;
+	private final int x;
 
-	private int y;
+	private final int y;
 
+	/**
+	 * Une position avec des coordonnees.
+	 * 
+	 * @param x
+	 *            La coordonne X
+	 * @param y
+	 *            La coordonne Y
+	 */
 	public Position(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
+	/**
+	 * @return La coordonnees X
+	 */
 	public int getX() {
 		return this.x;
 	}
 
+	/**
+	 * @return La coordonnees Y
+	 */
 	public int getY() {
 		return this.y;
 	}

@@ -7,11 +7,20 @@ import fr.projet.java.towerdefense.Chemin;
 import fr.projet.java.towerdefense.Position;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
 import fr.projet.java.towerdefense.exception.CheminImpossibleException;
+
+/**
+ * @author Romain IA qui utilise l'algorithme de detection de chemin par vague.
+ *         On affecte un coefficient à chaque case ( plus grand si elle represente un danger ) puis on parcourt le chemin en
+ *         sens inverse en trouvant les case adjacentes les moins coefficiente.
+ */
 public class IAParVagueAvance implements IntelligenceArtificiel {
 
 	private static final Integer EST_UNE_TOUR = -1;
 	private Integer[][] carteCoefficient;
 
+	/**
+	 * Le constructeur initialise la carte des coefficient.
+	 */
 	public IAParVagueAvance() {
 		this.carteCoefficient = new Integer[Carte.TAILLE_X_CARTE][Carte.TAILLE_Y_CARTE];
 	}
@@ -69,41 +78,43 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 
 		// Creation du chemin.
 		while (!positionCheminActuel.equals(Carte.POSTION_DEPART)) {
-			
+
 			// Ajout de la position au chemin
-			if ( carte.estUneTour(positionCheminActuel) ) throw new CheminImpossibleException();
+			if (carte.estUneTour(positionCheminActuel))
+				throw new CheminImpossibleException();
 			cheminDefinitif.add(0, positionCheminActuel);
-			
-			// Si il n'y a pas de coefficient dans les cases adjacentes le chemin est impossible.
+
+			// Si il n'y a pas de coefficient dans les cases adjacentes le
+			// chemin est impossible.
 			positionAdjacente = casesAdjacentesCoefficientees(positionCheminActuel);
-			if ( positionAdjacente.size() == 0 ) throw new CheminImpossibleException();
+			if (positionAdjacente.size() == 0)
+				throw new CheminImpossibleException();
 			Iterator<Position> iteratorDePositionAdjacente = positionAdjacente
 					.iterator();
-			
+
 			// Determinisation de la position adjacente la moins coefficienté.
 			while (iteratorDePositionAdjacente.hasNext()) {
 				positionATesterPourCoefficient = iteratorDePositionAdjacente
 						.next();
 				// Vérifie si le coefficient est plus petit.
-				if (carteCoefficient[positionATesterPourCoefficient
-										.getX()][positionATesterPourCoefficient.getY()] != null
+				if (carteCoefficient[positionATesterPourCoefficient.getX()][positionATesterPourCoefficient
+						.getY()] != null
 						&& carteCoefficient[positionATesterPourCoefficient
 								.getX()][positionATesterPourCoefficient.getY()] != EST_UNE_TOUR
-						&& carteCoefficient[positionATesterPourCoefficient.getX()][positionATesterPourCoefficient
-						                                   						.getY()] < coefficientDeReference) {
+						&& carteCoefficient[positionATesterPourCoefficient
+								.getX()][positionATesterPourCoefficient.getY()] < coefficientDeReference) {
 					positionCheminActuel = new Position(
 							positionATesterPourCoefficient.getX(),
 							positionATesterPourCoefficient.getY());
 					coefficientDeReference = carteCoefficient[positionATesterPourCoefficient
 							.getX()][positionATesterPourCoefficient.getY()];
 				}
-				
+
 			}
 
-
 		}
-		
-		//Ajout de la dernière position du chemin
+
+		// Ajout de la dernière position du chemin
 		cheminDefinitif.add(0, positionCheminActuel);
 
 		// Affectation et retour du chemin
@@ -114,24 +125,24 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 	private ArrayList<Position> casesAdjacentesCoefficientees(Position position) {
 		ArrayList<Position> positionAdjacente = new ArrayList<Position>();
 
-		if ( (position.getX() > 0)
-				&& ( carteCoefficient[position.getX()-1][position.getY()] != null)
-				&& ( carteCoefficient[position.getX()-1][position.getY()] != EST_UNE_TOUR ) )
+		if ((position.getX() > 0)
+				&& (carteCoefficient[position.getX() - 1][position.getY()] != null)
+				&& (carteCoefficient[position.getX() - 1][position.getY()] != EST_UNE_TOUR))
 			positionAdjacente.add(new Position(position.getX() - 1, position
 					.getY()));
 		if ((position.getX() + 1 < Carte.TAILLE_X_CARTE)
-				&& ( carteCoefficient[position.getX()+1][position.getY()] != null)
-				&& ( carteCoefficient[position.getX()+1][position.getY()] != EST_UNE_TOUR ) )
+				&& (carteCoefficient[position.getX() + 1][position.getY()] != null)
+				&& (carteCoefficient[position.getX() + 1][position.getY()] != EST_UNE_TOUR))
 			positionAdjacente.add(new Position(position.getX() + 1, position
 					.getY()));
 		if ((position.getY() > 0)
-				&& ( carteCoefficient[position.getX()][position.getY()-1] != null)
-				&& ( carteCoefficient[position.getX()][position.getY()-1] != EST_UNE_TOUR ) )
+				&& (carteCoefficient[position.getX()][position.getY() - 1] != null)
+				&& (carteCoefficient[position.getX()][position.getY() - 1] != EST_UNE_TOUR))
 			positionAdjacente.add(new Position(position.getX(),
 					position.getY() - 1));
 		if ((position.getY() + 1 < Carte.TAILLE_Y_CARTE)
-				&& ( carteCoefficient[position.getX()][position.getY()+1] != null)
-				&& ( carteCoefficient[position.getX()][position.getY()+1] != EST_UNE_TOUR ) )
+				&& (carteCoefficient[position.getX()][position.getY() + 1] != null)
+				&& (carteCoefficient[position.getX()][position.getY() + 1] != EST_UNE_TOUR))
 			positionAdjacente.add(new Position(position.getX(),
 					position.getY() + 1));
 
@@ -151,7 +162,7 @@ public class IAParVagueAvance implements IntelligenceArtificiel {
 		ArrayList<Position> positionContenantLeCoeff = new ArrayList<Position>();
 		for (int x = 0; x < Carte.TAILLE_X_CARTE; x++)
 			for (int y = 0; y < Carte.TAILLE_Y_CARTE; y++) {
-				if ( coefficient.equals(carteCoefficient[x][y]) )
+				if (coefficient.equals(carteCoefficient[x][y]))
 					positionContenantLeCoeff.add(new Position(x, y));
 			}
 		return positionContenantLeCoeff;
