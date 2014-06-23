@@ -44,7 +44,7 @@ public class IHMTowerDefense implements Affichage, Joueur, Runnable,
 	public ActionUtilisateur choisirUneAction() throws FinirLeTourException {
 		//carte.desactiverLaCarte();
 		
-		while (tourEnAttente && continuerLAction) {
+		while ( tourEnAttente && continuerLAction ) {
 			// TODO Supprimer ça en faisant que la boucle marche toujours.
 			System.out.println("a");
 
@@ -63,7 +63,7 @@ public class IHMTowerDefense implements Affichage, Joueur, Runnable,
 	public Position choisirUnePosition() throws AnnulerException {
 		menu.desactiverLeMenu();
 		
-		while (positionEnAttente && continuerLAction) {
+		while ( positionEnAttente && continuerLAction ) {
 			// TODO RE - supprimer ça en faisant que la boucle marche toujours.
 			System.out.println("b");
 		}

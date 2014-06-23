@@ -1,11 +1,16 @@
 package fr.projet.java.towerdefense.elementDeLaCarte;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 import fr.projet.java.towerdefense.Position;
 
 public class Tour extends ElementAPacerSuRLaCarte{
 	
 	private static final int DOMMAGE_PAR_DEFAUT = 1;
 	private static final int PORTEE_PAR_DEFAUT = 1;
+	
+	private Icon icon;
 	
 	private Position position;
 	private int dommage = 1;
@@ -16,6 +21,7 @@ public class Tour extends ElementAPacerSuRLaCarte{
 		this.dommage = DOMMAGE_PAR_DEFAUT;
 		this.portee = PORTEE_PAR_DEFAUT;
 		this.niveau = 1;
+		affecterUnIcone();
 	}
 	
 	public void determinerPosition(Position position) {
@@ -26,6 +32,7 @@ public class Tour extends ElementAPacerSuRLaCarte{
 		this.portee++;
 		this.dommage += 2;
 		this.niveau++;
+		affecterUnIcone();
 	}
 	
 	public Position obtenirPosition() {
@@ -42,5 +49,14 @@ public class Tour extends ElementAPacerSuRLaCarte{
 	
 	public int obtenirNiveau() {
 		return this.niveau;
+	}
+	
+	public Icon obtenirLIcone(){
+		return this.icon;
+	}
+	
+	private void affecterUnIcone() {
+		if (this.niveau > 2) this.icon = new ImageIcon("ressources/images/tours/tour_puissante.png");
+		else this.icon = new ImageIcon("ressources/images/tours/tour_faible.png");
 	}
 }

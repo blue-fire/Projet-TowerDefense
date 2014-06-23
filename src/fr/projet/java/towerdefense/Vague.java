@@ -25,8 +25,12 @@ public class Vague {
 			break;
 		default:
 			int nombreDEnnemisDuNiveau = niveau*5;
-			for (int ennemiCourant = nombreDEnnemisDuNiveau; ennemiCourant > 0 ; ennemiCourant--)
-				this.ennemis.add(new EnnemiFaible(ennemiCourant, niveau*2));
+			for (int ennemiCourant = nombreDEnnemisDuNiveau; ennemiCourant > 0 ; ennemiCourant--) {
+				if (ennemiCourant%5 == 0)
+					this.ennemis.add(new EnnemiPuissant(ennemiCourant, niveau*2+20));
+				else 
+					this.ennemis.add(new EnnemiFaible(ennemiCourant, niveau*2));
+			}
 			this.nbEnnemis = this.ennemis.size();
 		}
 	}

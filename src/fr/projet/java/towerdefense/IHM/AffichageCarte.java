@@ -2,11 +2,14 @@ package fr.projet.java.towerdefense.IHM;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import fr.projet.java.towerdefense.Position;
 import fr.projet.java.towerdefense.elementDeLaCarte.Carte;
+import fr.projet.java.towerdefense.exception.PositionInvalideException;
 
 public class AffichageCarte extends JPanel {
 
@@ -57,9 +60,20 @@ public class AffichageCarte extends JPanel {
 				}
 				// Afficher les tours.
 				else if (carte.estUneTour(positionCourante)) {
+					try {
+						this.carteDeBouton[caseCouranteX][caseCouranteY]
+								.setIcon(carte.obtenirLaTourDeCase(positionCourante).obtenirLIcone());
+						this.carteDeBouton[caseCouranteX][caseCouranteY]
+								.setText(Integer.toString(carte.obtenirLaTourDeCase(
+										positionCourante).obtenirNiveau()));
+					}
+					catch (PositionInvalideException e) {}
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
-							.setIcon(new ImageIcon(
-									"ressources/images/tour_faible.png"));
+							.setHorizontalTextPosition(SwingConstants.CENTER);
+					this.carteDeBouton[caseCouranteX][caseCouranteY]
+							.setVerticalTextPosition(SwingConstants.TOP);
+					this.carteDeBouton[caseCouranteX][caseCouranteY]
+							.setIconTextGap(-7);
 				}
 				// Afficher les ennemis.
 				else if (carte.estUnEnnemi(positionCourante)) {
@@ -67,7 +81,7 @@ public class AffichageCarte extends JPanel {
 							.setIcon( carte.obtenirLEnnemi(positionCourante).obtenirLIcone() );
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
 							.setText(Integer.toString(carte.obtenirLEnnemi(
-									new Position(caseCouranteX, caseCouranteY))
+									positionCourante)
 									.obtenirVie()));
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
 							.setIconTextGap(0);
