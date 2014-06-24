@@ -17,8 +17,7 @@ public class Tour extends ElementAPacerSuRLaCarte {
 
 	private Icon icon;
 
-	// TODO Passer en final.
-	private Position position;
+	private final Position position;
 
 	private int dommage = 1;
 	private int portee;
@@ -26,22 +25,17 @@ public class Tour extends ElementAPacerSuRLaCarte {
 
 	/**
 	 * Une tour qui a une portee un niveau et fait des dommage.
+	 * determine aussi la position a laquelle sera placer la tour.
+	 * @param position
+	 *            la position de la tour.
 	 */
-	public Tour() {
+	public Tour(Position position) {
+		this.position = position;
+		
 		this.dommage = DOMMAGE_PAR_DEFAUT;
 		this.portee = PORTEE_PAR_DEFAUT;
 		this.niveau = 1;
 		affecterUnIcone();
-	}
-
-	/**
-	 * determine la posiiton a laquelle sera placer la tour.
-	 * 
-	 * @param position
-	 *            la position de la tour.
-	 */
-	public void determinerPosition(Position position) {
-		this.position = position;
 	}
 
 	/**

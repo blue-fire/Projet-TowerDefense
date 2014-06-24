@@ -34,7 +34,7 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	private boolean positionEnAttente;
 
 	/**
-	 * Creer les element de l'interface.
+	 * Creer les variable pour le passage d'element.
 	 */
 	public IHMTowerDefense() {
 		super();
@@ -48,13 +48,13 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	}
 
 	@Override
+	// TODO Passer finirLeTour en actionUtilisateur.
 	public ActionUtilisateur choisirUneAction() throws FinirLeTourException {
 		// carte.desactiverLaCarte();
 
 		while (tourEnAttente && continuerLAction) {
 			// TODO Supprimer ça en faisant que la boucle marche toujours.
-			//System.out.println("a");
-
+			System.out.println("a");
 		}
 		if (!continuerLAction) {
 			continuerLAction = true;
@@ -72,7 +72,7 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 
 		while (positionEnAttente && continuerLAction) {
 			// TODO RE - supprimer ça en faisant que la boucle marche toujours.
-			//System.out.println("b");
+			System.out.println("b");
 		}
 
 		if (!continuerLAction) {
@@ -103,12 +103,14 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 
 		JComponent source = (JComponent) even.getSource();
 
+		// Soit c'est un bouton de la carte.
 		if (source instanceof BouttonCarte) {
 			positionChoisi = new Position(((BouttonCarte) source).obtenirX(),
 					((BouttonCarte) source).obtenirY());
 			positionEnAttente = false;
 
 		}
+		// Soit un bouton d'action.
 		else if (source.getName() == "finirLAction")
 			continuerLAction = false;
 		else {

@@ -75,9 +75,8 @@ public class PartieDeTowerDefense {
 
 				// On effectue l'action.
 				if (actionJoueur == ActionUtilisateur.creerTour) {
-					tour = new Tour();
-					tour.determinerPosition(position);
-					carte.placerUneTour(position, tour);
+					tour = new Tour(position);
+					carte.placerUneTour(tour);
 					try {
 						cheminEnnemi = intelligenceArtificiel
 								.obtenirUnChemin(carte);

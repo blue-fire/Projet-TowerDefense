@@ -45,7 +45,6 @@ public class Carte {
 				this.carte[x][y] = new Case();
 		ennemis = new ArrayList<Ennemi>();
 		tours = new ArrayList<Tour>();
-		// CARTE_TEST();
 	}
 
 	/**
@@ -296,20 +295,17 @@ public class Carte {
 	/**
 	 * Place un tour sur la case
 	 * 
-	 * @param position
-	 *            la postion de la case
 	 * @param tourAPlacer
 	 *            la tour a placer.
 	 * @throws PositionInvalideException
 	 *             La contient deja quelque chose.
 	 */
-	public void placerUneTour(Position position, Tour tourAPlacer)
+	public void placerUneTour(Tour tourAPlacer)
 			throws PositionInvalideException {
-		if (!this.laCaseEstVide(position))
+		if (!this.laCaseEstVide(tourAPlacer.obtenirPosition()))
 			throw new PositionInvalideException();
-		tourAPlacer.determinerPosition(position);
 		this.tours.add(tourAPlacer);
-		this.carte[position.getX()][position.getY()]
+		this.carte[tourAPlacer.obtenirPosition().getX()][tourAPlacer.obtenirPosition().getY()]
 				.placerUnElement(tourAPlacer);
 	}
 
@@ -396,37 +392,6 @@ public class Carte {
 
 	private void supprimerUnEnnemiDeLaCarte(Position position) {
 		this.carte[position.getX()][position.getY()].supprimerLElement();
-	}
-
-	@SuppressWarnings("unused")
-	private void CARTE_TEST() {
-		try {
-			this.placerUneTour(new Position(5, 8), new Tour());
-			this.placerUneTour(new Position(5, 7), new Tour());
-			this.placerUneTour(new Position(5, 6), new Tour());
-			this.placerUneTour(new Position(5, 5), new Tour());
-			this.placerUneTour(new Position(5, 4), new Tour());
-			this.placerUneTour(new Position(5, 3), new Tour());
-			this.placerUneTour(new Position(5, 2), new Tour());
-			this.placerUneTour(new Position(5, 1), new Tour());
-			this.placerUneTour(new Position(5, 0), new Tour());
-
-			this.placerUneTour(new Position(3, 1), new Tour());
-			this.placerUneTour(new Position(2, 1), new Tour());
-			this.placerUneTour(new Position(1, 1), new Tour());
-			this.placerUneTour(new Position(1, 2), new Tour());
-			this.placerUneTour(new Position(1, 3), new Tour());
-			this.placerUneTour(new Position(1, 4), new Tour());
-			this.placerUneTour(new Position(1, 5), new Tour());
-			this.placerUneTour(new Position(1, 6), new Tour());
-			this.placerUneTour(new Position(1, 7), new Tour());
-			this.placerUneTour(new Position(0, 7), new Tour());
-
-			this.placerUneTour(new Position(4, 5), new Tour());
-			this.placerUneTour(new Position(3, 5), new Tour());
-		}
-		catch (PositionInvalideException e) {
-		}
 	}
 
 }

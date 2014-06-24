@@ -74,9 +74,9 @@ public class Vague {
 	}
 
 	private void vague2() {
-		for (int ennemiCourant = 10; ennemiCourant > 0; ennemiCourant--)
+		for (int ennemiCourant = 11; ennemiCourant > 1; ennemiCourant--)
 			this.ennemis.add(new EnnemiFaible(ennemiCourant, 5));
-		this.ennemis.add(new EnnemiPuissant(11, 15));
+		this.ennemis.add(new EnnemiPuissant(0, 15));
 		this.nbEnnemis = this.ennemis.size();
 	}
 
