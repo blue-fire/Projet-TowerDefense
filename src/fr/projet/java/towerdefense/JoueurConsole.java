@@ -3,7 +3,6 @@ package fr.projet.java.towerdefense;
 import java.util.Scanner;
 
 import fr.projet.java.towerdefense.exception.AnnulerException;
-import fr.projet.java.towerdefense.exception.FinirLeTourException;
 
 /**
  * @author Romain Un joueur jouant sur la console.
@@ -18,7 +17,7 @@ public class JoueurConsole extends JoueurAbstrait {
 	}
 
 	@Override
-	public ActionUtilisateur choisirUneAction() throws FinirLeTourException {
+	public ActionUtilisateur choisirUneAction() {
 		Scanner scan = new Scanner(System.in);
 
 		System.out.println("Vous souhaiter créer une tour :");
@@ -26,7 +25,7 @@ public class JoueurConsole extends JoueurAbstrait {
 		int nbTour = scan.nextInt();
 
 		if (nbTour == -1)
-			throw new FinirLeTourException();
+			return ActionUtilisateur.finirLeTour;
 
 		return ActionUtilisateur.creerTour;
 	}

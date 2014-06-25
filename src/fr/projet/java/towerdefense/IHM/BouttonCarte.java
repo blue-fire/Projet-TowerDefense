@@ -21,6 +21,7 @@ public class BouttonCarte extends JButton {
 	public BouttonCarte(int x, int y) {
 		super();
 
+		this.setFocusable(false);
 		this.setOpaque(true);
 
 		this.x = x;

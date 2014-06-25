@@ -1,7 +1,6 @@
 package fr.projet.java.towerdefense;
 
 import fr.projet.java.towerdefense.exception.AnnulerException;
-import fr.projet.java.towerdefense.exception.FinirLeTourException;
 import fr.projet.java.towerdefense.exception.PositionInvalideException;
 
 /**
@@ -15,10 +14,8 @@ public interface Joueur {
 	 * Le joueur choisi une action a effectuer.
 	 * 
 	 * @return L'action choisie.
-	 * @throws FinirLeTourException
-	 *             Le joueur veut finir le tour.
 	 */
-	public ActionUtilisateur choisirUneAction() throws FinirLeTourException;
+	public ActionUtilisateur choisirUneAction() ;
 
 	/**
 	 * Le joueur choisie une position.

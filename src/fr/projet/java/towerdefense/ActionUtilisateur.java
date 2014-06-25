@@ -16,5 +16,13 @@ public enum ActionUtilisateur {
 	/**
 	 * Ameliorer une tour.
 	 */
-	ameliorerTour();
+	ameliorerTour(),
+	/**
+	 * Finir le tour de jeu.
+	 */
+	finirLeTour(),
+	/**
+	 * Annuler l'action.
+	 */
+	annuler;
 }

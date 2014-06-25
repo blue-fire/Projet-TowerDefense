@@ -61,12 +61,9 @@ public class PartieDeTowerDefense {
 
 		while (true) {
 			// Le joueur choisi l'action qu'il souhaite effectuer.
-			try {
-				actionJoueur = joueur.choisirUneAction();
-			}
-			catch (FinirLeTourException e) {
+			actionJoueur = joueur.choisirUneAction();
+			if (actionJoueur == ActionUtilisateur.finirLeTour)
 				break;
-			}
 
 			// Le joueur choisi la position a laquelle il souhaite effectuer
 			// l'action.
