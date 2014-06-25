@@ -42,8 +42,19 @@ public interface Joueur {
 	/**
 	 * Modifier la vie du joueur.
 	 * 
-	 * @param vieAModifier
+	 * @param modificationVie
 	 *            La modification de la vie du joueur.
 	 */
-	public void modifierVie(int vieAModifier);
+	public void modifierVie(int modificationVie);
+	
+	/**
+	 * @return L'argent a disposition du joueur.
+	 */
+	public int obtenirArgent();
+	
+	/**
+	 * Modifie la tresorerie du joueur.
+	 * @param modificationArgent La somme a debiter ou crediter au joueur.
+	 */
+	public void modifierArgent(int modificationArgent);
 }

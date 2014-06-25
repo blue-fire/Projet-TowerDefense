@@ -21,9 +21,9 @@ public class Menu extends JPanel {
 	private BoutonTour boutonsDesTours;
 
 	private Grille1x2 tours;
-	private Grille1x2 ennemis;
+	private Grille1x2 argent;
 	private Grille1x2 vague;
-	private Grille1x2 vies;
+	private Grille1x2 vie;
 
 	/**
 	 * Construit le menu
@@ -43,14 +43,14 @@ public class Menu extends JPanel {
 		tours = new Grille1x2("Tours : ");
 		this.add(tours);
 
-		ennemis = new Grille1x2("Ennemis : ");
-		this.add(ennemis);
-
 		vague = new Grille1x2("Vague : ");
 		this.add(vague);
+		
+		argent = new Grille1x2("Argent : ");
+		this.add(argent);
 
-		vies = new Grille1x2(new ImageIcon("ressources/images/coeur.png"));
-		this.add(vies);
+		vie = new Grille1x2(new ImageIcon("ressources/images/coeur.png"));
+		this.add(vie);
 
 		boutonFinAction = new JButton("Lancer une nouvelle vague !");
 		boutonFinAction.setName("finirLAction");
@@ -63,26 +63,26 @@ public class Menu extends JPanel {
 	/**
 	 * Met a jour le menu.
 	 * 
-	 * @param vies
+	 * @param vieJoueur
 	 *            les vies du joueur.
 	 * @param niveauVague
 	 *            Le niveau de la vague.
 	 * @param nombreDeTours
 	 *            Le nombre de tour du joueur.
-	 * @param nombreDEnnemis
+	 * @param argentJoueur
 	 *            Le nombre d'ennemi sur la carte.
 	 */
-	public void mettreAJour(int vies, int niveauVague, int nombreDeTours,
-			int nombreDEnnemis) {
+	public void mettreAJour(int vieJoueur, int niveauVague, int nombreDeTours,
+			int argentJoueur) {
 
 		if (nombreDeTours != NE_PAS_METTRE_A_JOUR)
 			this.tours.mettreAJour(nombreDeTours);
-		if (nombreDEnnemis != NE_PAS_METTRE_A_JOUR)
-			this.ennemis.mettreAJour(nombreDEnnemis);
+		if (argentJoueur != NE_PAS_METTRE_A_JOUR)
+			this.argent.mettreAJour(argentJoueur);
 		if (niveauVague != NE_PAS_METTRE_A_JOUR)
 			this.vague.mettreAJour(niveauVague);
-		if (vies >= 0)
-			this.vies.mettreAJour(vies);
+		if (vieJoueur >= 0)
+			this.vie.mettreAJour(vieJoueur);
 
 	}
 

@@ -1,9 +1,5 @@
 package fr.projet.java.towerdefense;
 
-import fr.projet.java.towerdefense.exception.AnnulerException;
-import fr.projet.java.towerdefense.exception.FinirLeTourException;
-import fr.projet.java.towerdefense.exception.PositionInvalideException;
-
 /**
  * Un joueur abstrait.
  * 
@@ -16,31 +12,47 @@ public abstract class JoueurAbstrait implements Joueur {
 	 * La vie par defaut du joueur.
 	 */
 	public static final int VIE_PAR_DEFAUT = 100;
-	private int vie;
+	
+	/**
+	 * L'argent du joueur en debut de partie.
+	 */
+	public static final int ARGENT_PAR_DEFAUT = 1000;
+	
+	/**
+	 * La vie du joueur.
+	 */
+	protected int vie;
+	/**
+	 * L'argent du joueur.
+	 */
+	protected int argent;
 
 	/**
-	 * Il possede une vie.
+	 * Il possede une vie et de l'argent.
 	 */
 	public JoueurAbstrait() {
 		this.vie = VIE_PAR_DEFAUT;
+		this.argent = ARGENT_PAR_DEFAUT;
 	}
 
 	@Override
-	public abstract ActionUtilisateur choisirUneAction()
-			throws FinirLeTourException;
-
-	@Override
-	public abstract Position choisirUnePosition() throws AnnulerException,
-			PositionInvalideException;
-
-	@Override
-	public void modifierVie(int Modificationvie) {
-		this.vie += Modificationvie;
+	public void modifierVie(int modificationVie) {
+		this.vie += modificationVie;
 	}
 
 	@Override
 	public int obtenirVie() {
 		return this.vie;
+	}
+	
+	@Override
+	public int obtenirArgent() {
+		return this.argent;
+	}
+	
+	@Override
+	public void modifierArgent(int modificationArgent) {
+		this.argent += modificationArgent;
 	}
 
 }

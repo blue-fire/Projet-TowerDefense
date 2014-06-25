@@ -75,20 +75,26 @@ public class PartieDeTowerDefense {
 
 				// On effectue l'action.
 				if (actionJoueur == ActionUtilisateur.creerTour) {
-					tour = new Tour(position);
-					carte.placerUneTour(tour);
-					try {
-						cheminEnnemi = intelligenceArtificiel
-								.obtenirUnChemin(carte);
-					}
-					catch (CheminImpossibleException e) {
-						carte.supprimerLaTourLaCarte(tour);
-						System.err
-								.println("Chemin imposiible, action annulée.");
+					// On verifie si le joueur a l'argent.
+					if (joueur.obtenirArgent() >= Tour.PRIX_DE_CONSTRUCTION) {
+						tour = new Tour(position);
+						carte.placerUneTour(tour);
+						try {
+							cheminEnnemi = intelligenceArtificiel
+									.obtenirUnChemin(carte);
+							joueur.modifierArgent(-Tour.PRIX_DE_CONSTRUCTION);
+						}
+						catch (CheminImpossibleException e) {
+							carte.supprimerLaTourLaCarte(tour);
+							System.err
+									.println("Chemin impossible, action annulée.");
+						}
 					}
 				}
 				if (actionJoueur == ActionUtilisateur.supprimerTour) {
 					tour = carte.obtenirLaTourDeCase(position);
+					// On rend l'argent au joueur et on supprime la tour.
+					joueur.modifierArgent(tour.prixDeDestruction());
 					carte.supprimerLaTourLaCarte(tour);
 					try {
 						cheminEnnemi = intelligenceArtificiel
@@ -97,20 +103,25 @@ public class PartieDeTowerDefense {
 					catch (CheminImpossibleException e) {
 						carte.supprimerLaTourLaCarte(tour);
 						System.err
-								.println("Chemin imposiible, action annulée.");
+								.println("Chemin impossible, action annulée.");
 					}
 				}
 				if (actionJoueur == ActionUtilisateur.ameliorerTour) {
 					tour = carte.obtenirLaTourDeCase(position);
-					tour.augmenterNiveau();
-					try {
-						cheminEnnemi = intelligenceArtificiel
-								.obtenirUnChemin(carte);
-					}
-					catch (CheminImpossibleException e) {
-						carte.supprimerLaTourLaCarte(tour);
-						System.err
-								.println("Chemin imposiible, action annulée.");
+					// On verifie si le joueur a l'argent.
+					if (joueur.obtenirArgent() >= tour.prixDeLAmelioration()) {
+						joueur.modifierArgent(-tour.prixDeLAmelioration());
+						tour.augmenterNiveau();
+
+						try {
+							cheminEnnemi = intelligenceArtificiel
+									.obtenirUnChemin(carte);
+						}
+						catch (CheminImpossibleException e) {
+							carte.supprimerLaTourLaCarte(tour);
+							System.err
+									.println("Chemin impossible, action annulée.");
+						}
 					}
 				}
 
@@ -124,9 +135,8 @@ public class PartieDeTowerDefense {
 
 			affichage.afficherLaCarte(carte);
 
-			affichage.afficherLeMenu(joueur.obtenirVie(),
-					Menu.NE_PAS_METTRE_A_JOUR, carte.obtenirLeNombreDeTours(),
-					carte.obtenirLeNombreDEnnemis());
+			affichage.afficherLeMenu(Menu.NE_PAS_METTRE_A_JOUR,
+					carte.obtenirLeNombreDeTours());
 		}
 	}
 
@@ -151,11 +161,9 @@ public class PartieDeTowerDefense {
 
 			joueur.modifierVie(-carte.avancerEnnemi());
 			carte.endommagerLesEnnemis();
-			carte.verifierVieEnnemi();
+			joueur.modifierArgent(carte.verifierVieEnnemi() * 25);
 			affichage.afficherLaCarte(carte);
-			affichage.afficherLeMenu(joueur.obtenirVie(), niveau,
-					carte.obtenirLeNombreDeTours(),
-					carte.obtenirLeNombreDEnnemis());
+			affichage.afficherLeMenu(niveau, carte.obtenirLeNombreDeTours());
 			if (carte.plusDEnnemiSurLaCarte())
 				break;
 		}

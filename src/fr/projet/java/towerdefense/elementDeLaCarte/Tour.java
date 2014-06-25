@@ -12,16 +12,24 @@ import fr.projet.java.towerdefense.Position;
  */
 public class Tour extends ElementAPacerSuRLaCarte {
 
+	/**
+	 * Le prix de construction de ce type de tour.
+	 */
+	public static final int PRIX_DE_CONSTRUCTION = 100;
+	
 	private static final int DOMMAGE_PAR_DEFAUT = 1;
 	private static final int PORTEE_PAR_DEFAUT = 1;
+	private static final int PRIX_DE_PREMIERE_AMELIORATION = 150;
 
 	private Icon icon;
 
 	private final Position position;
 
-	private int dommage = 1;
+	private int dommage;
 	private int portee;
 	private int niveau;
+	
+	private int prixAmelioration;
 
 	/**
 	 * Une tour qui a une portee un niveau et fait des dommage.
@@ -31,6 +39,8 @@ public class Tour extends ElementAPacerSuRLaCarte {
 	 */
 	public Tour(Position position) {
 		this.position = position;
+		
+		this.prixAmelioration = PRIX_DE_PREMIERE_AMELIORATION;
 		
 		this.dommage = DOMMAGE_PAR_DEFAUT;
 		this.portee = PORTEE_PAR_DEFAUT;
@@ -45,6 +55,7 @@ public class Tour extends ElementAPacerSuRLaCarte {
 		this.portee++;
 		this.dommage += 2;
 		this.niveau++;
+		this.prixAmelioration += 50;
 		affecterUnIcone();
 	}
 
@@ -83,6 +94,21 @@ public class Tour extends ElementAPacerSuRLaCarte {
 		return this.icon;
 	}
 
+	/**
+	 * @return Le prix d'une amelioration.
+	 */
+	public int prixDeLAmelioration() {
+		return this.prixAmelioration;
+	}
+	
+	/**
+	 * @return Le prix rendu si la tour est detruite.
+	 */
+	public int prixDeDestruction() {
+		return ( (this.niveau+1) * 50 );
+	}
+	
+	
 	private void affecterUnIcone() {
 		if (this.niveau > 2)
 			this.icon = new ImageIcon(

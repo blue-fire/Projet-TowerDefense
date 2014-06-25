@@ -29,8 +29,7 @@ public class AffichageConsole implements Affichage {
 	}
 
 	@Override
-	public void afficherLeMenu(int vies, int niveauVague, int nombreDeTours,
-			int nombreDEnnemis) {
+	public void afficherLeMenu(int niveauVague, int nombreDeTours) {
 
 	}
 

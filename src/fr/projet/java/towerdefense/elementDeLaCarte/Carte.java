@@ -305,8 +305,8 @@ public class Carte {
 		if (!this.laCaseEstVide(tourAPlacer.obtenirPosition()))
 			throw new PositionInvalideException();
 		this.tours.add(tourAPlacer);
-		this.carte[tourAPlacer.obtenirPosition().getX()][tourAPlacer.obtenirPosition().getY()]
-				.placerUnElement(tourAPlacer);
+		this.carte[tourAPlacer.obtenirPosition().getX()][tourAPlacer
+				.obtenirPosition().getY()].placerUnElement(tourAPlacer);
 	}
 
 	/**
@@ -335,9 +335,12 @@ public class Carte {
 	/**
 	 * Si la vie des ennemi present sur la carte est inferieur ou egal a zero il
 	 * sont supprimer.
+	 * 
+	 * @return le nombre d'ennemis detruits.
 	 */
-	public void verifierVieEnnemi() {
+	public int verifierVieEnnemi() {
 		Iterator<Ennemi> iteratorDEnnemi = ennemis.iterator();
+		int nombreDennemisDetruits = 0;
 
 		while (iteratorDEnnemi.hasNext()) {
 			Ennemi ennemiCourant = iteratorDEnnemi.next();
@@ -345,8 +348,10 @@ public class Carte {
 				iteratorDEnnemi.remove();
 				this.supprimerUnEnnemiDeLaCarte(cheminEnnemi
 						.getPosition(ennemiCourant.getPositionSurLeChemin()));
+				nombreDennemisDetruits++;
 			}
 		}
+		return nombreDennemisDetruits;
 	}
 
 	/**

@@ -25,23 +25,23 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	private AffichageCarte carte;
 	private Menu menu;
 
-	private boolean continuerLAction;
+	private boolean nouvelleAction;
 
-	private boolean tourEnAttente;
+	private boolean finDuTour;
 	private ActionUtilisateur actionChoisie;
 
 	private Position positionChoisi;
-	private boolean positionEnAttente;
+	private boolean nouvellePosition;
 
 	/**
 	 * Creer les variable pour le passage d'element.
 	 */
 	public IHMTowerDefense() {
 		super();
-		continuerLAction = true;
+		nouvelleAction = false;
+		nouvellePosition = false;
 
-		tourEnAttente = true;
-		positionEnAttente = true;
+		finDuTour = false;
 
 		actionChoisie = null;
 		positionChoisi = null;
@@ -52,16 +52,16 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	public ActionUtilisateur choisirUneAction() throws FinirLeTourException {
 		// carte.desactiverLaCarte();
 
-		while (tourEnAttente && continuerLAction) {
+		while (!finDuTour && !nouvelleAction) {
 			// TODO Supprimer ça en faisant que la boucle marche toujours.
 			System.out.println("a");
 		}
-		if (!continuerLAction) {
-			continuerLAction = true;
+		if (nouvelleAction) {
+			nouvelleAction = false;
 			throw new FinirLeTourException();
 		}
 
-		tourEnAttente = true;
+		finDuTour = false;
 		// carte.activerLaCarte();
 		return actionChoisie;
 	}
@@ -70,18 +70,18 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	public Position choisirUnePosition() throws AnnulerException {
 		menu.desactiverLeMenu();
 
-		while (positionEnAttente && continuerLAction) {
+		while (!nouvellePosition && !nouvelleAction) {
 			// TODO RE - supprimer ça en faisant que la boucle marche toujours.
 			System.out.println("b");
 		}
 
-		if (!continuerLAction) {
-			continuerLAction = true;
+		if (nouvelleAction) {
+			nouvelleAction = false;
 			menu.activerLeMenu();
 			throw new AnnulerException();
 		}
 
-		positionEnAttente = true;
+		nouvellePosition = false;
 		menu.activerLeMenu();
 		return positionChoisi;
 
@@ -93,9 +93,8 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	}
 
 	@Override
-	public void afficherLeMenu(int vies, int niveauVague, int nombreDeTours,
-			int nombreDEnnemis) {
-		this.menu.mettreAJour(vies, niveauVague, nombreDeTours, nombreDEnnemis);
+	public void afficherLeMenu(int niveauVague, int nombreDeTours) {
+		this.menu.mettreAJour(this.vie, niveauVague, nombreDeTours, this.argent);
 	}
 
 	@Override
@@ -107,12 +106,12 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 		if (source instanceof BouttonCarte) {
 			positionChoisi = new Position(((BouttonCarte) source).obtenirX(),
 					((BouttonCarte) source).obtenirY());
-			positionEnAttente = false;
+			nouvellePosition = true;
 
 		}
 		// Soit un bouton d'action.
 		else if (source.getName() == "finirLAction")
-			continuerLAction = false;
+			nouvelleAction = true;
 		else {
 			if (source.getName() == "creer")
 				actionChoisie = ActionUtilisateur.creerTour;
@@ -120,7 +119,7 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 				actionChoisie = ActionUtilisateur.supprimerTour;
 			else if (source.getName() == "ameliorer")
 				actionChoisie = ActionUtilisateur.ameliorerTour;
-			tourEnAttente = false;
+			finDuTour = true;
 		}
 
 	}

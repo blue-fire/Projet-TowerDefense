@@ -20,15 +20,10 @@ public interface Affichage {
 	/**
 	 * Afficher un menu permettant de choisir les action a effectuer.
 	 * 
-	 * @param vies
-	 *            Le nombres de vies restantes au joueur.
 	 * @param niveauVague
 	 *            Le niveau de la vague.
 	 * @param nombreDeTours
 	 *            Le nombre de tours du joueur.
-	 * @param nombreDEnnemis
-	 *            Le nombre d'ennemis se trouvant sur la carte.
 	 */
-	public void afficherLeMenu(int vies, int niveauVague, int nombreDeTours,
-			int nombreDEnnemis);
+	public void afficherLeMenu(int niveauVague, int nombreDeTours);
 }
