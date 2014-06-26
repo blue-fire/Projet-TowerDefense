@@ -12,7 +12,7 @@ public class LanceurDeTowerDefense {
 
 	/**
 	 * La classe main...
-	 * @param args Ici null
+	 * @param args Ici nul
 	 */
 	public static void main(String[] args) {
 		

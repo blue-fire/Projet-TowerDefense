@@ -57,15 +57,15 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 
 	@Override
 	public Position choisirUnePosition() throws AnnulerException {
-		menu.desactiverLeMenu();
 
 		while (!nouvellePosition) ;
 
+		nouvellePosition = false;
+		
 		if (this.actionChoisie == ActionUtilisateur.finirLeTour) {
 			throw new AnnulerException();
 		}
 
-		nouvellePosition = false;
 		return positionChoisi;
 
 	}
@@ -117,7 +117,8 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	public void run() {
 		JFrame fenetre = new JFrame();
 		splitPane = new JSplitPane();
-
+		splitPane.setResizeWeight(0.75);
+		
 		fenetre.setSize(1000, 800);
 		fenetre.setContentPane(splitPane);
 

@@ -23,7 +23,9 @@ public class JoueurConsole extends JoueurAbstrait {
 		System.out.println("Vous souhaiter créer une tour :");
 
 		int nbTour = scan.nextInt();
-
+		
+		scan.close();
+		
 		if (nbTour == -1)
 			return ActionUtilisateur.finirLeTour;
 
@@ -38,6 +40,8 @@ public class JoueurConsole extends JoueurAbstrait {
 
 		int x = scan.nextInt();
 
+		scan.close();
+		
 		if (x == -1)
 			throw new AnnulerException();
 
