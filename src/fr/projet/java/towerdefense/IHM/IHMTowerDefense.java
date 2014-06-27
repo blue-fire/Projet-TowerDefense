@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
-
 import fr.projet.java.towerdefense.ActionUtilisateur;
 import fr.projet.java.towerdefense.Affichage;
 import fr.projet.java.towerdefense.JoueurAbstrait;
@@ -35,38 +34,47 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	 */
 	public IHMTowerDefense() {
 		super();
-		nouvellePosition = false;
-
-		finDuTour = false;
-
-		actionChoisie = null;
-		positionChoisi = null;
-	}
-
-	@Override
-	public ActionUtilisateur choisirUneAction() {
-
-		menu.activerLeMenu();
 		
-		while (!finDuTour) ;
+		this.menu = new Menu(this);
+		this.carte = new AffichageCarte(this);
+		
+		this.nouvellePosition = false;
 
-		finDuTour = false;
-		menu.desactiverLeMenu();
-		return actionChoisie;
+		this.finDuTour = false;
+
+		this.actionChoisie = null;
+		this.positionChoisi = null;
 	}
 
 	@Override
-	public Position choisirUnePosition() throws AnnulerException {
-		menu.desactiverLeMenu();
+	public void actionPerformed(ActionEvent even) {
 
-		while (!nouvellePosition) ;
+		JComponent source = (JComponent) even.getSource();
 
-		if (this.actionChoisie == ActionUtilisateur.finirLeTour) {
-			throw new AnnulerException();
+		// Soit la source est un bouton d'action.
+		if (source.getName() == "finirLAction") {
+			this.actionChoisie = ActionUtilisateur.finirLeTour;
+			this.finDuTour = true;
+		}
+		else if (source.getName() == "creer") {
+			this.actionChoisie = ActionUtilisateur.creerTour;
+			this.finDuTour = true;
+		}
+		else if (source.getName() == "supprimer") {
+			this.actionChoisie = ActionUtilisateur.supprimerTour;
+			this.finDuTour = true;
+		}
+		else if (source.getName() == "ameliorer") {
+			this.actionChoisie = ActionUtilisateur.ameliorerTour;
+			this.finDuTour = true;
 		}
 
-		nouvellePosition = false;
-		return positionChoisi;
+		// Soit c'est un bouton de la carte.
+		else {
+			this.positionChoisi = new Position(((BouttonCarte) source).obtenirX(),
+					((BouttonCarte) source).obtenirY());
+			this.nouvellePosition = true;
+		}
 
 	}
 
@@ -82,56 +90,49 @@ public class IHMTowerDefense extends JoueurAbstrait implements Affichage,
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent even) {
+	public ActionUtilisateur choisirUneAction() {
 
-		JComponent source = (JComponent) even.getSource();
+		this.menu.activerLeMenu();
+		
+		while (!this.finDuTour) ;
 
-		// Soit la source est un bouton d'action.
-		if (source.getName() == "finirLAction") {
-			actionChoisie = ActionUtilisateur.finirLeTour;
-			finDuTour = true;
-		}
-		else if (source.getName() == "creer") {
-			actionChoisie = ActionUtilisateur.creerTour;
-			finDuTour = true;
-		}
-		else if (source.getName() == "supprimer") {
-			actionChoisie = ActionUtilisateur.supprimerTour;
-			finDuTour = true;
-		}
-		else if (source.getName() == "ameliorer") {
-			actionChoisie = ActionUtilisateur.ameliorerTour;
-			finDuTour = true;
+		this.finDuTour = false;
+		this.menu.desactiverLeMenu();
+		return this.actionChoisie;
+	}
+
+	@Override
+	public Position choisirUnePosition() throws AnnulerException {
+
+		while (!this.nouvellePosition) ;
+
+		if (this.actionChoisie == ActionUtilisateur.finirLeTour) {
+			throw new AnnulerException();
 		}
 
-		// Soit c'est un bouton de la carte.
-		else {
-			positionChoisi = new Position(((BouttonCarte) source).obtenirX(),
-					((BouttonCarte) source).obtenirY());
-			nouvellePosition = true;
-		}
+		this.nouvellePosition = false;
+		return this.positionChoisi;
 
 	}
 
 	@Override
 	public void run() {
+		
 		JFrame fenetre = new JFrame();
-		splitPane = new JSplitPane();
+		this.splitPane = new JSplitPane();
 
 		fenetre.setSize(1000, 800);
 		fenetre.setContentPane(splitPane);
 
-		splitPane.setEnabled(false);
+		this.splitPane.setEnabled(false);
 
-		menu = new Menu(this);
-		carte = new AffichageCarte(this);
-
-		splitPane.setRightComponent(menu);
-		splitPane.setLeftComponent(carte);
+		this.splitPane.setRightComponent(menu);
+		this.splitPane.setLeftComponent(carte);
 
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		fenetre.setVisible(true);
+		
 	}
 
 }

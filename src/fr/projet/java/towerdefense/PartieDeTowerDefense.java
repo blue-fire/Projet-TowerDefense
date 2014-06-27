@@ -145,7 +145,7 @@ public class PartieDeTowerDefense {
 
 		while (true) {
 			try {
-				Thread.sleep(600);
+				Thread.sleep(400);
 			}
 			catch (InterruptedException e) {
 				e.printStackTrace();
