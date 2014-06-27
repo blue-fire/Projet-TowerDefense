@@ -1,5 +1,7 @@
 package fr.projet.java.towerdefense.IHM;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 
 /**
@@ -11,32 +13,38 @@ public class BouttonCarte extends JButton {
 	private int y;
 
 	/**
-	 * Creation du bouton
+	 * Un bouton de la carte.
 	 * 
 	 * @param x
-	 *            la coordonne x
+	 *            La position en x du bouton sur la carte.
 	 * @param y
-	 *            la coordonne y
+	 *            La position en y du bouton sur la carte.
+	 * @param auditeurBoutons
+	 *            L'auditeur du bouton.
 	 */
-	public BouttonCarte(int x, int y) {
+	public BouttonCarte(int x, int y,
+			ActionListener auditeurBoutons) {
 		super();
-
-		this.setFocusable(false);
-		this.setOpaque(true);
-
+		this.setFocusPainted(false);
 		this.x = x;
 		this.y = y;
+
+		this.addActionListener(auditeurBoutons);
 	}
 
 	/**
-	 * @return la coordonnees x.
+	 * obtenir la position x du bouton.
+	 * 
+	 * @return La position x du bouton sur la carte.
 	 */
 	public int obtenirX() {
 		return x;
 	}
 
 	/**
-	 * @return la coordonnees y.
+	 * obtenir la position y du bouton.
+	 * 
+	 * @return La position y du bouton sur la carte.
 	 */
 	public int obtenirY() {
 		return y;
