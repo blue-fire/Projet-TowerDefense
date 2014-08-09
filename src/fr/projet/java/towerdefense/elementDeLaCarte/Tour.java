@@ -16,7 +16,7 @@ public class Tour extends ElementAPacerSuRLaCarte {
 	 * Le prix de construction de ce type de tour.
 	 */
 	public static final int PRIX_DE_CONSTRUCTION = 100;
-	
+
 	private static final int DOMMAGE_PAR_DEFAUT = 1;
 	private static final int PORTEE_PAR_DEFAUT = 1;
 	private static final int PRIX_DE_PREMIERE_AMELIORATION = 150;
@@ -28,20 +28,21 @@ public class Tour extends ElementAPacerSuRLaCarte {
 	private int dommage;
 	private int portee;
 	private int niveau;
-	
+
 	private int prixAmelioration;
 
 	/**
-	 * Une tour qui a une portee un niveau et fait des dommage.
-	 * determine aussi la position a laquelle sera placer la tour.
+	 * Une tour qui a une portee un niveau et fait des dommage. determine aussi
+	 * la position a laquelle sera placer la tour.
+	 * 
 	 * @param position
 	 *            la position de la tour.
 	 */
 	public Tour(Position position) {
 		this.position = position;
-		
+
 		this.prixAmelioration = PRIX_DE_PREMIERE_AMELIORATION;
-		
+
 		this.dommage = DOMMAGE_PAR_DEFAUT;
 		this.portee = PORTEE_PAR_DEFAUT;
 		this.niveau = 1;
@@ -100,20 +101,20 @@ public class Tour extends ElementAPacerSuRLaCarte {
 	public int prixDeLAmelioration() {
 		return this.prixAmelioration;
 	}
-	
+
 	/**
 	 * @return Le prix rendu si la tour est detruite.
 	 */
 	public int prixDeDestruction() {
-		return ( (this.niveau+1) * 50 );
+		return ((this.niveau + 1) * 50);
 	}
-	
-	
+
 	private void affecterUnIcone() {
 		if (this.niveau > 2)
-			this.icon = new ImageIcon(
-					"ressources/images/tours/tour_puissante.png");
+			this.icon = new ImageIcon(getClass().getResource(
+					"/ressources/images/tours/tour_puissante.png"));
 		else
-			this.icon = new ImageIcon("ressources/images/tours/tour_faible.png");
+			this.icon = new ImageIcon(getClass().getResource(
+					"/ressources/images/tours/tour_faible.png"));
 	}
 }

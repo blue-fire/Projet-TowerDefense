@@ -28,16 +28,16 @@ public class EnnemiFaible extends Ennemi {
 
 		switch (image) {
 		case 1:
-			this.icon = new ImageIcon(
-					"ressources/images/ennemis/ennemi_faible_1.png");
+			this.icon = new ImageIcon(getClass().getResource(
+					"/ressources/images/ennemis/ennemi_faible_1.png"));
 			break;
 		case 2:
-			this.icon = new ImageIcon(
-					"ressources/images/ennemis/ennemi_faible_2.png");
+			this.icon = new ImageIcon(getClass().getResource(
+					"/ressources/images/ennemis/ennemi_faible_2.png"));
 			break;
 		default:
-			this.icon = new ImageIcon(
-					"ressources/images/ennemis/ennemi_faible_3.png");
+			this.icon = new ImageIcon(getClass().getResource(
+					"/ressources/images/ennemis/ennemi_faible_3.png"));
 		}
 
 	}

@@ -57,15 +57,15 @@ public class AffichageCarte extends JPanel {
 				// Afficher les position de depart et d'arriver.
 				if (positionCourante.equals(Carte.POSITION_ARRIVE)) {
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
-							.setIcon(new ImageIcon(
-									"ressources/images/drapeau_arriver.png"));
+							.setIcon(new ImageIcon(getClass().getResource(
+									"/ressources/images/drapeau_arriver.png")));
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
 							.setText("");
 				}
 				else if (positionCourante.equals(Carte.POSTION_DEPART)) {
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
-							.setIcon(new ImageIcon(
-									"ressources/images/drapeau_depart.png"));
+							.setIcon(new ImageIcon(getClass().getResource(
+									"/ressources/images/drapeau_depart.png")));
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
 							.setText("");
 				}
@@ -104,7 +104,8 @@ public class AffichageCarte extends JPanel {
 				// Sinon ne rien afficher.
 				else {
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
-							.setIcon(new ImageIcon(""));
+							.setIcon(new ImageIcon(getClass().getResource(
+									"/ressources/images/herbe.png")));
 					this.carteDeBouton[caseCouranteX][caseCouranteY]
 							.setText("");
 				}

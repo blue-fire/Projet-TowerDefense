@@ -49,7 +49,7 @@ public class Menu extends JPanel {
 		argent = new Grille1x2("Argent : ");
 		this.add(argent);
 
-		vie = new Grille1x2(new ImageIcon("ressources/images/coeur.png"));
+		vie = new Grille1x2(new ImageIcon(getClass().getResource("/ressources/images/coeur.png")));
 		this.add(vie);
 
 		boutonFinAction = new JButton("Lancer une nouvelle vague !");

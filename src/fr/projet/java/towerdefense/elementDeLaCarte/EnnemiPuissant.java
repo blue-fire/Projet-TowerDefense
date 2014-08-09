@@ -21,8 +21,7 @@ public class EnnemiPuissant extends Ennemi {
 
 	@Override
 	protected void affecterUnIcon() {
-		this.icon = new ImageIcon(
-				"ressources/images/ennemis/ennemi_puissant_1.png");
+		this.icon = new ImageIcon(getClass().getResource("/ressources/images/ennemis/ennemi_puissant_1.png"));
 	}
 
 }

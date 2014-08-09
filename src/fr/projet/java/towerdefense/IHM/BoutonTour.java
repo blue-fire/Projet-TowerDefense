@@ -29,22 +29,22 @@ public class BoutonTour extends JPanel {
 
 		boutonCreer = new JButton();
 		boutonCreer.setName("creer");
-		boutonCreer.setIcon(new ImageIcon(
-				"ressources/images/bouton_construction.png"));
+		boutonCreer.setIcon(new ImageIcon(getClass().getResource(
+				"/ressources/images/bouton_construction.png")));
 		boutonCreer.addActionListener(lis);
 		this.add(boutonCreer);
 
 		boutonSupprimer = new JButton();
 		boutonSupprimer.setName("supprimer");
-		boutonSupprimer.setIcon(new ImageIcon(
-				"ressources/images/bouton_suppression.png"));
+		boutonSupprimer.setIcon(new ImageIcon(getClass().getResource(
+				"/ressources/images/bouton_suppression.png")));
 		boutonSupprimer.addActionListener(lis);
 		this.add(boutonSupprimer);
 
 		boutonAmeliore = new JButton();
 		boutonAmeliore.setName("ameliorer");
-		boutonAmeliore.setIcon(new ImageIcon(
-				"ressources/images/bouton_amelioration.png"));
+		boutonAmeliore.setIcon(new ImageIcon(getClass().getResource(
+				"/ressources/images/bouton_amelioration.png")));
 		boutonAmeliore.addActionListener(lis);
 		this.add(boutonAmeliore);
 	}
